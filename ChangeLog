@@ -1,7 +1,8 @@
 2010-12-31  yshl <yshl@takechiyo.net>
 
 	* genchars.sh migemo migemo-cache.rb migemo-convert.rb migemo-dict.rb
-	migemo-index.rb migemo.rb.in tests/Makefile.in: Change for Ruby 1.9
+	migemo-index.rb migemo.rb.in tests/Makefile.am migemo-grep
+	migemo-server migemo-client: Change for Ruby 1.9
 
 2003-05-28  Satoru Takabayashi  <satoru@namazu.org>
 
