@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby
+#! /usr/bin/ruby
 #
 # migemo-grep - a simple grep-like tool employing migemo.
 #
