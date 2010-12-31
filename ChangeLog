@@ -1,3 +1,8 @@
+2010-12-31  yshl <yshl@takechiyo.net>
+
+	* configure.in migemo.in migemo-grep.in migemo-server.in
+	migemo-client.in: configure script makes shebang line
+
 2003-05-28  Satoru Takabayashi  <satoru@namazu.org>
 
 	* Migemo: Version 0.40 Released.

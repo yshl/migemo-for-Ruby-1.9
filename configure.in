@@ -28,4 +28,4 @@ else
 fi
 
 
-AC_OUTPUT(Makefile tests/Makefile migemo.rb)
+AC_OUTPUT(Makefile tests/Makefile migemo migemo.rb migemo-grep migemo-server migemo-client)
