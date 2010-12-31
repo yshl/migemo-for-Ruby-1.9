@@ -1,3 +1,4 @@
+# -*- encoding:euc-jp -*-
 #
 # Ruby/Migemo - a library for Japanese incremental search.
 #
@@ -14,7 +15,6 @@
 require 'migemo-dict'
 require 'migemo-regex'
 require 'romkan'
-require 'jcode'
 include MigemoRegex
 
 class String
@@ -24,7 +24,7 @@ class String
   end
 
   def quotemeta
-    self.gsub(/([^ \w])/, '\\\\\\1')
+    self.gsub(/([[:punct:]])/, '\\\\\\1')
   end
 
   def first
@@ -177,7 +177,7 @@ class Migemo
     expand_kanas.each do |x| 
       compiler.push(x)
       compiler.push(x.to_katakana)
-      expand_words(@static_dict, x).each do |x| compiler.push(x) end
+      expand_words(@static_dict, x).each do |y| compiler.push(y) end
     end
     expand_words(@static_dict, @pattern).each do |x| compiler.push(x) end
     compiler.uniq
@@ -188,7 +188,7 @@ class Migemo
   def lookup_user_dict
     compiler = RegexCompiler.new
     expand_kanas.each do |x| 
-      expand_words(@user_dict, x).each do |x| compiler.push(x) end
+      expand_words(@user_dict, x).each do |y| compiler.push(y) end
     end
     expand_words(@user_dict, @pattern).each do |x| compiler.push(x) end
     compiler.uniq

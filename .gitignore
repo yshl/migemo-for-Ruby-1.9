@@ -1,0 +1,14 @@
+Makefile
+config.log
+config.status
+config.cache
+elc-stamp
+migemo.elc
+migemo.el
+migemo.rb
+migemo-dict.cache
+migemo-dict.cache.idx
+tmp.*
+tests/Makefile
+tests/test-dict.*
+tests/tmp.*

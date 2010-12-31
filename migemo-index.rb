@@ -19,5 +19,5 @@ while line = gets
   unless line =~ /^;/
     print [offset].pack("N")
   end
-  offset += line.length
+  offset += line.bytesize
 end
