@@ -10,7 +10,7 @@ test-dict.idx: test-dict ../migemo-index.rb
 test-dict.cache: test-dict test-dict.idx ../migemo-cache.rb
 	ruby -rromkan -ne 'puts $$1.to_roma if /^(.+?)	/' test-dict |\
 	while read line; do\
-	    echo $$line | ruby -ne 'chomp!;1.upto($$_.length) do |x| puts $$_[0,x] end';\
+	    echo $$line | ruby -ne '$$_.chomp!;1.upto($$_.length) do |x| puts $$_[0,x] end';\
 	done | ruby -I.. ../migemo-cache.rb test-dict
 
 clean-local:
