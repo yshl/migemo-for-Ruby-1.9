@@ -1,3 +1,4 @@
+# -*- encoding:euc-jp -*-
 #
 # Ruby/Migemo - a library for Japanese incremental search.
 #
