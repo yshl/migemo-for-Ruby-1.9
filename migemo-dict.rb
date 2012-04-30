@@ -69,7 +69,7 @@ class MigemoStaticDict < MigemoDict
   public
   def lookup (pattern)
     range = @index.bsearch_range do |idx| 
-      key, values = decompose(get_line(idx))
+      key, = decompose(get_line(idx))
       key.prefix_match(pattern)
     end
     if range 
@@ -89,7 +89,7 @@ class MigemoUserDict < MigemoDict
 
   def lookup (pattern)
     range = @lines.bsearch_range do |line| 
-      key, values = decompose(line)
+      key, = decompose(line)
       key.prefix_match(pattern)
     end
     if range 
@@ -124,11 +124,11 @@ class MigemoDictCache
     raise if pattern == nil
     pattern = pattern.downcase
     idx = @index.bsearch_first do |idx1| 
-      key, data = decompose(idx1)
+      key, = decompose(idx1)
       key <=> pattern 
     end
     if idx
-      key, data = decompose(@index[idx])
+      data = decompose(@index[idx])[1]
       return data
     else
       nil
