@@ -1,3 +1,8 @@
+2012-04-30  yshl <yshl@takechiyo.net>
+
+	* acinclude.m4: Use RbConfig instead of obsolete Config.
+	* migemo-dict.rb: Delete unused variables.
+
 2010-12-31  yshl <yshl@takechiyo.net>
 
 	* genchars.sh migemo migemo-cache.rb migemo-convert.rb migemo-dict.rb
