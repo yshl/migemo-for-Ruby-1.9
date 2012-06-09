@@ -5,13 +5,13 @@ noinst_DATA = 	test-dict.idx test-dict.cache
 
 
 test-dict.idx: test-dict ../migemo-index.rb
-	ruby -I.. ../migemo-index.rb test-dict > test-dict.idx
+	ruby -Eeuc-jp -I.. ../migemo-index.rb test-dict > test-dict.idx
 
 test-dict.cache: test-dict test-dict.idx ../migemo-cache.rb
-	ruby -rromkan -ne 'puts $$1.to_roma if /^(.+?)	/' test-dict |\
+	ruby -Eeuc-jp -rromkan -ne 'puts $$1.to_roma if /^(.+?)	/' test-dict |\
 	while read line; do\
-	    echo $$line | ruby -ne '$$_.chomp!;1.upto($$_.length) do |x| puts $$_[0,x] end';\
-	done | ruby -I.. ../migemo-cache.rb test-dict
+	    echo $$line | ruby -Eeuc-jp -ne '$$_.chomp!;1.upto($$_.length) do |x| puts $$_[0,x] end';\
+	done | ruby -Eeuc-jp -I.. ../migemo-cache.rb test-dict
 
 clean-local:
 	rm -f tmp.*
