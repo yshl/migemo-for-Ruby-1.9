@@ -33,8 +33,14 @@ class MigemoDictItem
 end
 
 class MigemoDict
+  class << self
+    def open(filename)
+      File.open(filename, 'r', :external_encoding => 'euc-jp')
+    end
+  end
+
   def initialize (filename)
-    @dict  = File.new(filename)
+    @dict  = MigemoDict.open(filename)
   end
 
   private
@@ -57,7 +63,7 @@ end
 class MigemoStaticDict < MigemoDict
   def initialize (filename)
     super(filename)
-    @index = File.new(filename + ".idx").read.unpack "N*"
+    @index = MigemoDict.open(filename + ".idx").read.unpack "N*"
   end
 
   private
@@ -69,7 +75,7 @@ class MigemoStaticDict < MigemoDict
   public
   def lookup (pattern)
     range = @index.bsearch_range do |idx| 
-      key, = decompose(get_line(idx))
+      key, values = decompose(get_line(idx))
       key.prefix_match(pattern)
     end
     if range 
@@ -89,7 +95,7 @@ class MigemoUserDict < MigemoDict
 
   def lookup (pattern)
     range = @lines.bsearch_range do |line| 
-      key, = decompose(line)
+      key, values = decompose(line)
       key.prefix_match(pattern)
     end
     if range 
@@ -106,8 +112,8 @@ end
 
 class MigemoDictCache
   def initialize (filename)
-    @dict  = File.new(filename)
-    @index = File.new(filename + ".idx").read.unpack "N*"
+    @dict  = MigemoDict.open(filename)
+    @index = MigemoDict.open(filename + ".idx").read.unpack "N*"
   end
 
   def decompose (idx)
@@ -124,11 +130,11 @@ class MigemoDictCache
     raise if pattern == nil
     pattern = pattern.downcase
     idx = @index.bsearch_first do |idx1| 
-      key, = decompose(idx1)
+      key, data = decompose(idx1)
       key <=> pattern 
     end
     if idx
-      data = decompose(@index[idx])[1]
+      key, data = decompose(@index[idx])
       return data
     else
       nil

@@ -42,6 +42,7 @@ Usage: migemo [OPTION]
   -s, --separator=STRING Insert String to each regular expression.
   -n, --nocache		 Don't use caches.
   -l, --logging=FILE	 Log patterns to FILE.
+  -e, --encoding=ENC     Use ENC for input/output encoding(default: euc-jp)
 "
 end
 
@@ -59,7 +60,8 @@ def parse_options
 		     ['--insert', '-i',		GetoptLong::REQUIRED_ARGUMENT],
 		     ['--separator', '-s',	GetoptLong::REQUIRED_ARGUMENT],
 		     ['--logging', '-l',	GetoptLong::REQUIRED_ARGUMENT],
-		     ['--nocache', '-n',	GetoptLong::NO_ARGUMENT])
+		     ['--nocache', '-n',	GetoptLong::NO_ARGUMENT],
+		     ['--encoding', '-e',	GetoptLong::REQUIRED_ARGUMENT])
 
   parser.each_option do |name, arg|
     options[name.sub(/^--/, "")] = arg
@@ -126,6 +128,11 @@ def main
     logger = Logger.new(options['logging'])
   end
 
+  encoding = 'euc-jp'
+  if options['encoding']
+    encoding = options['encoding']
+  end
+
   generate_regex_str = lambda {|pattern, with_paren|
     migemo = Migemo.new(static_dict, pattern)
     migemo.user_dict = user_dict if user_dict
@@ -139,8 +146,10 @@ def main
   }
 
   $stdout.sync = true
+  $stdin.set_encoding(encoding)
+  $stdout.set_encoding(encoding)
   while line = gets
-    pattern = line.chomp
+    pattern = line.encode('euc-jp').chomp
     segments = segment(pattern)
     
     if segments.length <= 1
@@ -154,7 +163,7 @@ def main
       regex_str = [regex_str1, regex_str2].join(bar)
     end
 
-    puts regex_str
+    puts regex_str.encode(encoding)
     puts options['separator'] if options['separator']
     logger.puts(pattern) if logger
   end
